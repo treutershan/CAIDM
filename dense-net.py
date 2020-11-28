@@ -41,7 +41,6 @@ relu = lambda x : layers.LeakyReLU()(x)
 concat = lambda a, b : layers.Concatenate()([a, b])
 
 dense = lambda x, k : conv3(relu(norm(x)), filters=k)
-
 bneck = lambda x, b : conv1(relu(norm(x)), filters=b)
 
 def dense_block(x, k=8, n=3, b=1):
@@ -62,8 +61,8 @@ trans = lambda x, b : pool(bneck(x, b))
 b0 = conv3(inputs['dat'], filters=4)
 b1 = trans(dense_block_(b0, 8), 4) # n = 6, 24
 b2 = trans(dense_block_(b1, 12), 6) # n = 12, 32
-b3 = trans(dense_block_(b2, 16), 8) # n = 24, 40
-bf = trans(dense_block_(b3, 24), 12) # n = 16, 128
+b3 = trans(dense_block_(b2, 24), 8) # n = 24, 40
+bf = trans(dense_block_(b3, 16), 12) # n = 16, 128
 
 # --- Flatten via pooling
 #f0 = layers.AveragePooling3D(pool_size=(1, bf.shape[2], bf.shape[3]), padding='same')(bf)
